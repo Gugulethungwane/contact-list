@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter API Key</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div>please enter a valid API key.</div>
+    
+    <form>
+        <input type="text" id="apikey" name="apikey"/>
+        <button id="submitApikey">Submit</button>
+    </form> 
+
+     <script>
+    let rootPath = "https://mysite.itvarsity.org/api/contactBook/";
+    document.getElementById("submitApikey").addEventListener("click", setApikey);
+
+    function setApikey(e){
+        e.preventDefault();
+        
+        let apikey = document.getElementById("apikey").value;
+        fetch(rootPath + "controller/api-key/?apikey=" + apikey)
+           .then(function (response) {
+                return response.text();
+            })
+            .then(function(data) {
+                if (data == "1") {
+                    localStorage.setItem("apikey", apikey);
+                    window.open("index.html", "_self");
+                } else {
+                    alert(data + " = Invalid API Key entered!");
+                }
+            });
+    }
+</script> 
+      
+</body>
+</html>
